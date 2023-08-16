@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            box-sizing: border-box;
+
+        }
+
+        img {
+            width: 20%;
+            display: flex;
+
+        }
+
+        .header {
+            display: flex;
+            background-color: aquamarine;
+            border-radius: 10px 10px 0px 0px;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: solid black;
+
+        }
+
+        span {
+            color: red;
+        }
+
+        h1 {
+            position: relative;
+            right: 40%;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            margin-top: 5px;
+        }
+
+        .sidebar {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            width: 10%;
+            height: 200px;
+            background-color: rgb(202, 217, 218);
+            border-radius: 5px;
+        }
+
+        .sidebar>ul {
+            padding: 0;
+            list-style-type: none;
+            height: 100%;
+            cursor: pointer;
+
+        }
+
+        .sidebar>ul>li {
+            text-decoration: none;
+            padding-bottom: 15px;
+            padding-top: 15px;
+        }
+
+        .sidebar>ul>li:hover {
+            text-decoration: none;
+            padding: 15px;
+            background-color: rgb(103, 104, 104);
+            border-radius: 20px;
+            transition: ease-in-out .2s;
+        }
+
+        .content {
+            background-color: burlywood;
+            width: 90%;
+
+        }
+
+        .content>h2 {
+            position: relative;
+            left: 10px;
+            top: 5px;
+        }
+
+        .content>div {
+            margin: 10px;
+        }
+
+        .header>h3 {
+            position: absolute;
+            color: white;
+            left: 7%;
+            top: 29%;
+        }
+
+        .items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            
+        }
+        .items>div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .footer>h3{
+            position: relative;
+            left: 50%;
+            padding: 40px;
+        }
+        
+    </style>
+    <script>
+    </script>
+</head>
+
+<body>
+    <section class="header">
+        <h3>Manish</h3>
+        <img src="../../images/logo.png" alt="">
+        <h1><span>M</span>anish SDMIT</h1>
+    </section>
+    <section class="container">
+        <div class="sidebar">
+            <ul>
+                <li class="home">Home</li>
+                <li class="About">About</li>
+                <li class="serv">Service</li>
+            </ul>
+        </div>
+        <div class="content">
+            <h2 class="label">
+                Introduction
+            </h2>
+            <div class="details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam architecto animi maiores
+                dolore! Excepturi fuga consequatur magni vero debitis rem, est ipsa! Iste, veniam odio. Dolorum tempora
+                sed temporibus nesciunt!</div>
+        </div>
+    </section>
+    <section class="footer">
+        <h3>Contact us</h3>
+        <div class="items">
+            <div class="item1">
+                <img src="./images/whatsapp.png" alt="">
+            </div>
+            <div class="item2">
+                <img src="./images/whatsapp.png" alt="">
+            </div>
+            <div class="item3">
+                <img src="./images/whatsapp.png" alt="">
+            </div>
+            <div class="item34">
+                <img src="./images/whatsapp.png" alt="">
+            </div>
+            <div class="item1">
+                <img src="./images/whatsapp.png" alt="">
+            </div>
+        </div>
+    </section>
+
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assignment1.css">
+</head>
+
+<body>
+    <form action="">
+        <section class="billing">
+            <h2>Billing address</h2>
+            <div class="two-col">
+                <label for="firstname">First name</label>
+                <label for="firstname">Last name</label>
+                <input type="text" id="firstname" autocomplete="off" required>
+                <input type="text" id="lastname" autocomplete="off" required>
+            </div>
+            <label for="username">Username</label>
+            <input type="text" id="username" autocomplete="off" required>
+            <label for="email">Email<span> (Optional)</span></label>
+            <input type="text" id="email" autocomplete="off" required>
+            <label for="address">Address</label>
+            <input type="text" id="address" autocomplete="off" required>
+            <label for="address2">Address 2<span> (Optional</span>)</label>
+            <input type="text" id="address2" autocomplete="off" required>
+            <div class="input-country">
+                <label for="country">country</label>
+                <label for="state">State</label>
+                <label for="zip">Zip</label>
+                <select name="country" id="country"></select>
+                <select name="state" id="state"></select>
+                <input type="text" id="zip">
+            </div>
+        </section>
+        <section class="input-btn">
+            <input type="checkbox" id="">
+            <label for="country">Shipping address is the same as my billing address</label>
+            <input type="checkbox" id="">
+            <label for="state">save this information for next time</label>
+        </section>
+
+        <section class="payment">
+            <h2>Payment</h2>
+            <div class="input-btn">
+                <input type="radio" id="creditcard">
+                <label for="creditcard">Credit card</label>
+                <input type="radio" id="debitcard">
+                <label for="debitcard">Debit card</label>
+                <input type="radio" id="paypal">
+                <label for="paypal">Paypal</label>
+            </div>
+            <div class="two-col">
+                <label for="firstname">Name on card</label>
+                <label for="firstname">Credit card number</label>
+                <input type="text" id="firstname" autocomplete="off" required>
+                <input type="text" id="lastname" autocomplete="off" required>
+            </div>
+            <span>Full name as displayed on card</span>
+            <div class="two-half-col">
+
+                <label for="firstname">Expiration</label>
+                <label for="firstname">CVV</label>
+                <input type="text" id="firstname" autocomplete="off" required>
+                <input type="text" id="lastname" autocomplete="off" required>
+            </div>
+        </section>
+        <input type="submit" value="Continue to checkout">
+
+    </form>
+    <section class="cart">
+        <h2><span>Your cart</span></h2>
+        <div class="notification">3</div>
+        <div class="itemscart">
+            <div class="item">
+                <div class="itemdetails">
+                    <h4>First</h4> <span>assas</span>
+                </div>
+                <div class="itemprice">$63</div>
+            </div>
+            <div class="item">
+                <div class="itemdetails">
+                    <h4>second</h4> <span>asafefeef</span>
+                </div>
+                <div class="itemprice">$56</div>
+            </div>
+            <div class="item">
+                <div class="itemdetails">
+                    <h4>third</h4> <span>addad</span>
+                </div>
+                <div class="itemprice">$655</div>
+            </div>
+            <div class="item">
+                <div class="itemdetails">
+                    <h4>First</h4> <span>jsadbhsvguhbjk</span>
+                </div>
+                <div class="itemprice">$65</div>
+            </div>
+            <div class="item">
+                <div class="itemdetails">
+                    <h4>First</h4> <span>jsadbhsvguhbjk</span>
+                </div>
+                <div class="itemprice">$65</div>
+            </div>
+            <div class="item">
+                    <h4>Total</h4>
+                <div class="itemprice">5677</div>
+            </div>
+        </div>
+        <div class="redeem">
+            <div class="content">
+                <input type="text" placeholder="Promo Code" name="" id="">
+                <button>Redeem</button>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
