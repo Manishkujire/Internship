@@ -2,7 +2,7 @@ responsive design
 git init
 git status
 git add .
-git 
+git branch
 git config --global user.email "minnu0371@gmail.com
 git config --global user.name "manish"
 git commit -m "first commit"    
