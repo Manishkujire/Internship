@@ -5,35 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="script.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+    <style>
+        .banner {
+            height: 50px;
+            font-weight: 500;
+            font-size: 30px;
+        }
+    </style>
 </head>
 
 <body>
-   <div class="container m-4 bg-light">
+
+
+    <div id="comment" class="banner text-center bg-light mb-3"></div>
+    <div class="container m-4 bg-light">
         <div class="row">
             <div class="col-md-4 col-sm-12">
                 <label for="name">Name:</label>
-                <input class="w-100" type="text">
+                <input id="name" class="w-100" type="text">
             </div>
             <div class="col-md-4 col-sm-12">
                 <label for="reg">Reg No:</label>
-                <input class="w-100" type="text">
+                <input id="reg" class="w-100" type="text">
             </div>
             <div class="col-md-4 col-sm-12">
                 <label for="Grade">Grade:</label>
-                <input class="w-100" type="text">
+                <input id="grade" class="w-100" type="text">
             </div>
         </div>
-        <div class="d-flex justify-content-center  my-2"><button type="button" id="submit" class="btn btn-success">SUBMIT</button>
-        <div><button type="button" id="clear" onclick="submitAction()" class="btn mx-3 btn-danger">CLEAR</button>
+        <div class="d-flex justify-content-center  my-2"><button type="button" id="submit" onclick="submitAction()"
+                class="btn btn-success">SUBMIT</button>
+            <div><button type="button" id="clear" class="btn mx-3 btn-danger">CLEAR</button>
+            </div>
         </div>
         <div class="container">
+            <div id="table" class="container mt-3 bg-light">
+                
+            </div>
         </div>
-   </div>
-<div id="table" class="container mt-3 bg-light">
-</div>
+    </div>
+    <script type="text/javascript" src="script.js"></script>
+
 </body>
 
 </html>
