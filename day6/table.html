@@ -16,7 +16,7 @@
     </style>
 </head>
 
-<body>
+<body onLoad="">
 
 
     <div class="container ml-3 bg-light">
@@ -24,8 +24,8 @@
             <h1 class="mx-5">Student Details Form</h1>
             <form class="w-100 " id="myForm" onsubmit="">
                 <div class="col-12 ">
-                    <label for="userName" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="username" onkeypress="disableWarning_userName()">
+                    <label for="userName" class="form-label">Name <span class="text-danger" >*</span> </label>
+                    <input type="text" autocomplete="off" class="form-control" id="username" onkeypress="disableWarning_userName()">
                 </div>
                 <div class="mb-3 ">
                     <span class="text-danger" id="userNameWarning"></span>
@@ -33,15 +33,15 @@
                 </div>
 
                 <div class="col-12">
-                    <label for="regNo" class="form-label">Registration Number</label>
-                    <input type="text" class="form-control" id="reg" onkeypress="disableWarning_regNo()">
+                    <label for="regNo" class="form-label">Registration Number <span class="text-danger" >*</span> </label>
+                    <input type="text" autocomplete="off" class="form-control" id="reg" onkeypress="disableWarning_regNo()">
                 </div>
                 <div class="mb-3 ">
                     <span class="text-danger" id="regNoWarning"></span>
                 </div>
                 <div class="col-12">
-                    <label for="grade" class="form-label">Grade</label>
-                    <input type="text" class="form-control" id="grade" onkeypress="disableWarning_grade()">
+                    <label for="grade" class="form-label">Grade <span class="text-danger" >*</span> </label>
+                    <input type="text" autocomplete="off" class="form-control" id="grade" onkeypress="disableWarning_grade()">
                 </div>
                 <div class="mb-3 ">
                     <span class="text-danger" id="gradeWarning"></span>
@@ -67,19 +67,6 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody" >
-                    <!-- <tr>
-                        <td>1</td>
-                        <td>manish</td>
-                        <td>155245</td>
-                        <td>9</td>
-                        <td colspan="2">
-                            <div class="row g-2 ">
-                                <div class="col-6 justify-content-center"><button class="btn w-100 btn-success"
-                                        id="edit" onclick="">Edit</button></div>
-                                <div class="col-6"><button class="btn w-100 btn-danger" id="edit">Delete</button></div>
-                            </div>
-                        </td>
-                    </tr> -->
                 </tbody>
             </table>
 

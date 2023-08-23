@@ -9,22 +9,6 @@ const submit = document.getElementById('submit')
 const reset_btn = document.getElementById('reset_btn')
 const tableBody = document.getElementById('tableBody')
 let tableData = [
-    {
-        name: "manish",
-        id: 5
-    },
-    {
-        name: "caha",
-        id: 5
-    },
-    {
-        name: "zz",
-        id: 5
-    },
-    {
-        name: "bikash",
-        id: 1
-    }
 ];
 
 let i = 0
@@ -41,30 +25,61 @@ const submitAction = () => {
             grade: grade.value
         }
         tableData.push(data)
-        console.log(
-            tableData
-        );
         clearForm()
         sortByName()
-        x = document.createElement('TR')
-        x.innerHTML = `<tr><td>${tableData.length}</td><td>${data.name}</td><td>${data.reg}</td><td>${data.grade}</td><td colspan="2"><div class="row g-2 "><div class="col-6 justify-content-center"><button class="btn w-100 btn-success" id="edit" onclick="editData(${i})">Edit</button></div><div class="col-6"><button onclick="deleteData(${i})" class="btn w-100 btn-danger" id="edit">Delete</button></div> </div></td></tr>`
-        tableBody.appendChild(x)
-
+        displayTable()
     }
+}
+const displayTable = () => {
+    tableBody.innerHTML = ""
+    let sl = 1
+    tableData.forEach(element => {
+        console.log(element)
+        x = document.createElement('TR')
+        x.setAttribute('id',`row${element.key}`)
+        x.innerHTML = `<tr><td>${sl}</td><td>${element.name}</td><td>${element.reg}</td><td>${element.grade}</td><td colspan="2"><div class="row g-2 "><div class="col-6 justify-content-center"><button class="btn w-100 btn-success" id="edit" onclick="editData(${element.key})">Edit</button></div><div class="col-6"><button onclick="deleteData(${element.key})" class="btn w-100 btn-danger" id="edit">Delete</button></div> </div></td></tr>`
+        tableBody.appendChild(x)
+        i++
+    });
+}
+
+const deleteData = (key) => {
+    tableData.splice(tableData.findIndex(object => {
+        return object.key === key
+    }),1)
+    console.log(tableData)
+    displayTable()
+}
+
+const inputChange=()=>{
+    alert("editing")
 }
 
 
-
+const editData=(key)=>{
+    let row=document.getElementById(`row${key}`)
+    for(i=1;i<row.cells.length-1;i++){
+        x = document.createElement('input')
+        x.setAttribute('type','text')
+        x.setAttribute('class','w-100')
+        x.setAttribute('oninput','inputChange()')
+        x.setAttribute('value',row.cells[i].innerHTML)
+        row.cells[i].innerHTML=""
+        row.cells[i].appendChild(x)
+    }
+}
 
 const sortByName = () => {
     console.log(
         tableData
     );
     tableData = tableData.map(
-        student => (
+        array => (
             {
-                name: student.name,
-                id: student.id
+                key: array.key,
+                name: array.name,
+                reg: array.reg,
+                grade: array.grade
             }
         )
     ).sort((a, b) => a.name.localeCompare(b.name)
@@ -82,8 +97,10 @@ const sortByReg = () => {
     tableData = tableData.map(
         student => (
             {
-                name: student.name,
-                id: student.id
+                key: student.key,
+                name: username.value,
+                reg: reg.value,
+                grade: grade.value
             }
         )
     ).sort((a, b) => a.id - b.id
@@ -93,22 +110,6 @@ const sortByReg = () => {
         tableData
     );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const validate = () => {
     if (username.value === "" || grade.value === "" || reg.value === "") {
