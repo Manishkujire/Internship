@@ -8,11 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
     <style>
-        .banner {
-            height: 50px;
-            font-weight: 500;
-            font-size: 30px;
-        }
+       img{
+        width: 25px;
+        height: 25px;
+        cursor:pointer;
+       }
     </style>
 </head>
 
@@ -47,7 +47,7 @@
                     <span class="text-danger" id="gradeWarning"></span>
                 </div>
                 <div class="buttons">
-                    <button type="button" class="btn btn-success m-2" id="submit"
+                    <button type="button" class="btn btn-success" id="submit"
                         onclick="submitAction()">Submit</button>
                     <button type="button" onclick="clearForm()" class="btn btn-secondary m-2" id="reset_btn">Reset</button>
                 </div>
@@ -56,14 +56,14 @@
 
         <div id="table " class="mt-5">
             <h1>Table</h1>
-            <table class="table">
-                <thead>
+            <table class="table text-center align-content-center">
+                <thead >
                     <tr>
                         <th>SL_No</th>
-                        <th>Name</th>
-                        <th>Reg</th>
-                        <th>Grade</th>
-                        <th colspan="2"></button></th>
+                        <th>Name <img class="bg-success rounded " id="head_name" onclick="sortByName()" src="up.png" alt=""></th>
+                        <th>Reg  <img class="bg-success rounded " onclick="sortByReg()" id="head_reg"  src="up.png" alt=""></th>
+                        <th>Grade <img class="bg-success rounded " onclick="sortByGrade()" id="head_grade"  src="up.png" alt=""></th>
+                        <th colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody id="tableBody" >

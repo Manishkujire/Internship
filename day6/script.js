@@ -26,7 +26,7 @@ const submitAction = () => {
         }
         tableData.push(data)
         clearForm()
-        sortByName()
+        sortByReg()
         displayTable()
     }
 }
@@ -95,15 +95,15 @@ const sortByReg = () => {
         tableData
     );
     tableData = tableData.map(
-        student => (
+        array => (
             {
-                key: student.key,
-                name: username.value,
-                reg: reg.value,
-                grade: grade.value
+                key: array.key,
+                name: array.name,
+                reg: array.reg,
+                grade: array.grade
             }
         )
-    ).sort((a, b) => a.id - b.id
+    ).sort((a, b) => a.reg - b.reg
     )
 
     console.log(
