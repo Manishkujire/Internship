@@ -11,7 +11,7 @@ const reset_btn = document.getElementById('reset_btn')
 const tableBody = document.getElementById('tableBody')
 let tableData = [
 ];
-
+let savedData=[]
 let i = 0
 
 const submitAction = () => {
@@ -235,6 +235,7 @@ const editData = (key) => {
         document.getElementById(`cancel${key}`).setAttribute('class', 'd-block col-12 justify-content-center')
         let row = document.getElementById(`row${key}`)
         for (i = 1; i < row.cells.length - 1; i++) {
+            savedData[i]=row.cells[i].innerHTML
             x = document.createElement('input')
             x.setAttribute('type', 'text')
             x.setAttribute('id', `input${i}`)
@@ -261,16 +262,17 @@ const cancelEdit = (key) => {
     dataIndex = tableData.findIndex(object => {
         return object.key === key
     })
-    slno = document.getElementById(`row${key}`).cells[0].innerHTML
-    let row = document.getElementById(`row${key}`)
-    row.innerHTML = `<tr><td>${slno}</td><td>${tableData[dataIndex].name}</td><td>${tableData[dataIndex].reg}</td><td>${tableData[dataIndex].grade}</td><td colspan="2"><div class="row g-2 ">
-    <div id="update${key}"  class="d-none col-6 justify-content-center"><button class="btn w-100  btn-success" onclick="updateData(${tableData[dataIndex].key})">Update</button></div>
-    <div id="edit${key}" class="d-block col-6 justify-content-center"><button class="btn w-100  btn-primary"  onclick="editData(${tableData[dataIndex].key})">Edit</button></div>
-    <div id="cancel${key}" class="d-none col-12 justify-content-center"><button class="btn w-100  btn-danger"  onclick="cancelEdit(${tableData[dataIndex].key})">Cancel</button></div>
-    
-    <div id="delete${key}" class="d-block col-6"><button onclick="deleteData(${tableData[dataIndex].key})" class="btn  w-100 btn-danger" >Delete</button></div> </div></td></tr>`
+    for (i = 1; i < row.cells.length - 1; i++) {
+        row.cells[i].innerHTML = savedData[i]
+    }
+    document.getElementById(`update${key}`).setAttribute('class', 'd-none col-6 justify-content-center')
+    document.getElementById(`cancel${key}`).setAttribute('class', 'd-none col-6 justify-content-center')
+    document.getElementById(`edit${key}`).setAttribute('class', 'd-block col-6 justify-content-center')
+    document.getElementById(`delete${key}`).setAttribute('class', 'd-block col-6 justify-content-center')
+
 
 }
+
 const updateData = (key) => {
     statusMode = "normal"
     let row = document.getElementById(`row${key}`)
