@@ -1,7 +1,7 @@
 console.log("hi")
 let state = "head_name"
-let preState="head_name"
-
+let preState = "head_name"
+let statusMode = "normal"
 const comment = document.getElementById('comment')
 const username = document.getElementById('username')
 const reg = document.getElementById('reg')
@@ -25,6 +25,7 @@ const submitAction = () => {
             reg: reg.value,
             grade: grade.value
         }
+        i++
         tableData.push(data)
         clearForm()
         mainSort(state)
@@ -37,9 +38,13 @@ const displayTable = () => {
     tableData.forEach(element => {
         x = document.createElement('TR')
         x.setAttribute('id', `row${element.key}`)
-        x.innerHTML = `<tr><td>${sl}</td><td>${element.name}</td><td>${element.reg}</td><td>${element.grade}</td><td colspan="2"><div class="row g-2 "><div class="col-6 justify-content-center"><button class="btn w-100 d-block btn-success" id="edit" onclick="editData(${element.key})">Edit</button></div><div class="col-6"><button onclick="deleteData(${element.key})" class="btn d-block w-100 btn-danger" id="edit">Delete</button></div> </div></td></tr>`
+        x.innerHTML = `<tr><td>${sl}</td><td>${element.name}</td><td>${element.reg}</td><td>${element.grade}</td><td colspan="2"><div class="row g-2 ">
+        <div id="edit" class="d-block col-6 justify-content-center"><button class="btn w-100  btn-primary"  onclick="editData(${element.key})">Edit</button></div>
+        <div id="cancel" class="d-none col-12 justify-content-center"><button class="btn w-100  btn-danger"  onclick="cancelEdit(${element.key})">Cancel</button></div>
+        <div id="update"  class="d-none col-6 justify-content-center"><button class="btn w-100  btn-success" onclick="updateData(${element.key})">Update</button></div>
+        <div id="delete" class="d-block col-6"><button onclick="deleteData(${element.key})" class="btn  w-100 btn-danger" >Delete</button></div> </div></td></tr>`
         tableBody.appendChild(x)
-        i++
+        sl++
     });
 }
 
@@ -166,7 +171,7 @@ const reverseSort = () => {
     tableData.reverse()
 }
 
-const mainSort=(state)=>{
+const mainSort = (state) => {
     if (!state.localeCompare('head_name')) {
         sortByName()
         console.log("in name")
@@ -189,14 +194,14 @@ const toggleSortImg = (obj) => {
     return state
 }
 
-const resetStateImg=()=>{
-    document.getElementById('head_grade').src="up.png"
-    document.getElementById('head_name').src="up.png"
-    document.getElementById('head_reg').src="up.png"
+const resetStateImg = () => {
+    document.getElementById('head_grade').src = "up.png"
+    document.getElementById('head_name').src = "up.png"
+    document.getElementById('head_reg').src = "up.png"
 }
 
 const sortBtnPress = (btn) => {
-    if(!state.localeCompare(btn)){
+    if (!state.localeCompare(btn)) {
         toggleSortImg(btn)
         reverseSort()
         console.log(state)
@@ -235,15 +240,21 @@ const sortBtnPress = (btn) => {
 // }
 
 const editData = (key) => {
-    let row = document.getElementById(`row${key}`)
-    for (i = 1; i < row.cells.length - 1; i++) {
-        x = document.createElement('input')
-        x.setAttribute('type', 'text')
-        x.setAttribute('class', 'w-100')
-        x.setAttribute('oninput', 'inputChange()')
-        x.setAttribute('value', row.cells[i].innerHTML)
-        row.cells[i].innerHTML = ""
-        row.cells[i].appendChild(x)
+    if (!statusMode.localeCompare("normal")) {
+        statusMode = "editing"
+        document.getElementById('edit').setAttribute('class', 'd-none col-6 justify-content-center')
+        document.getElementById('delete').setAttribute('class', 'd-none col-6 justify-content-center')
+        document.getElementById('cancel').setAttribute('class', 'd-block col-12 justify-content-center')
+        let row = document.getElementById(`row${key}`)
+        for (i = 1; i < row.cells.length - 1; i++) {
+            x = document.createElement('input')
+            x.setAttribute('type', 'text')
+            x.setAttribute('class', 'w-100')
+            x.setAttribute('oninput', 'onInputChange()')
+            x.setAttribute('value', row.cells[i].innerHTML)
+            row.cells[i].innerHTML = ""
+            row.cells[i].appendChild(x)
+        }
     }
 }
 
@@ -252,8 +263,42 @@ const editData = (key) => {
 //     for(i=0;i<len;i++){
 //         if(document.getElementById('tableBody').row[i].getAttribute('id')
 //     }
-    
-// }
-const enableBtn=()=>{
 
+// }
+// const enableBtn=()=>{
+//     if(!statusMode.localeCompare("editing")){
+//         statusMode="normal"
+//         document.getElementById('edit').setAttribute('class','d-none col-6 justify-content-center')
+//         document.getElementById('delete').setAttribute('class','d-none col-6 justify-content-center')
+//         document.getElementById('cancel').setAttribute('class','d-block col-12 justify-content-center')
+//         let row = document.getElementById(`row${key}`)
+//         for (i = 1; i < row.cells.length - 1; i++) {
+//             x = document.createElement('td')
+//             x.setAttribute('type', 'text')
+//             x.setAttribute('class', 'w-100')
+//             x.setAttribute('oninput', 'inputChange()')
+//             x.setAttribute('value', row.cells[i].innerHTML)
+//             row.cells[i].innerHTML = ""
+//             row.cells[i].appendChild(x)
+//         }
+// }
+
+
+const onInputChange = () => {
+    if (!statusMode.localeCompare("editing")) {
+        statusMode = "normal"
+        document.getElementById('update').setAttribute('class', 'd-block col-6 justify-content-center')
+        document.getElementById('cancel').setAttribute('class', 'd-block col-6 justify-content-center')
+        // let row = document.getElementById(`row${key}`)
+        // for (i = 1; i < row.cells.length - 1; i++) {
+        //     x = document.createElement('td')
+        //     x.setAttribute('type', 'text')
+        //     x.setAttribute('class', 'w-100')
+        //     x.setAttribute('oninput', 'inputChange()')
+        //     x.setAttribute('value', row.cells[i].innerHTML)
+        //     row.cells[i].innerHTML = ""
+        //     row.cells[i].appendChild(x)
+        // }
+
+    }
 }
