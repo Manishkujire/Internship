@@ -9,8 +9,7 @@ const grade = document.getElementById('grade')
 const submit = document.getElementById('submit')
 const reset_btn = document.getElementById('reset_btn')
 const tableBody = document.getElementById('tableBody')
-let tableData = [
-];
+let tableData = [];
 let savedData=[]
 let i = 0
 
@@ -207,25 +206,6 @@ const sortBtnPress = (btn) => {
     displayTable()
 
 }
-// const sortBtnPress = (btn) => {
-//     if(!preState.localeCompare(btn)){
-//         toggleSortImg(btn)
-//         reverseSort()
-//         console.log(state)
-//         console.log("in")
-//         displayTable()
-//         return
-//     }
-//     preState=state
-//     resetStateImg()
-//     toggleSortImg(btn)
-//     state = btn
-//     mainSort(state)
-//     console.log("out")
-//     console.log(state)
-//     displayTable()
-
-// }
 
 const editData = (key) => {
     if (!statusMode.localeCompare("normal")) {
@@ -259,6 +239,7 @@ const onInputChange = (key) => {
 
 const cancelEdit = (key) => {
     statusMode = "normal"
+    let row = document.getElementById(`row${key}`)
     dataIndex = tableData.findIndex(object => {
         return object.key === key
     })
