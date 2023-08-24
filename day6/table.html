@@ -25,9 +25,9 @@
             <h1 class="mx-5">Student Details Form</h1>
             <form class="w-100 " id="myForm" onsubmit="">
                 <div class="col-12 ">
-                    <label for="userName" class="form-label">Name <span class="text-danger">*</span> </label>
+                    <label for="userName" class="form-label" >Name <span class="text-danger">*</span> </label>
                     <input type="text" autocomplete="off" class="form-control" id="username"
-                        onkeypress="disableWarning_userName()">
+                        onkeypress="disableWarning_userName();return event.charCode >= 65 && event.charCode <= 122">
                 </div>
                 <div class="mb-3 ">
                     <span class="text-danger" id="userNameWarning"></span>
@@ -60,7 +60,7 @@
         </div>
 
         <div id="table " class="">
-           <div class="row my-3"><div class="col-2"><h1>Table</h1></div><div class="col-8 mx-4"><input placeholder="Type to search" type="text" class="form-control"></div></div> 
+           <div class="row my-3"><div class="col-2"><h1>Table</h1></div><div class="col-8 mx-4"><input placeholder="Type to search" type="text" class="form-control" id="search" oninput="searchData()"></div></div> 
             <table class="table text-center align-content-center">
                 <thead >
                     <tr>
