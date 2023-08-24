@@ -39,21 +39,24 @@ const displayTable = () => {
         x = document.createElement('TR')
         x.setAttribute('id', `row${element.key}`)
         x.innerHTML = `<tr><td>${sl}</td><td>${element.name}</td><td>${element.reg}</td><td>${element.grade}</td><td colspan="2"><div class="row g-2 ">
-        <div id="edit" class="d-block col-6 justify-content-center"><button class="btn w-100  btn-primary"  onclick="editData(${element.key})">Edit</button></div>
-        <div id="cancel" class="d-none col-12 justify-content-center"><button class="btn w-100  btn-danger"  onclick="cancelEdit(${element.key})">Cancel</button></div>
-        <div id="update"  class="d-none col-6 justify-content-center"><button class="btn w-100  btn-success" onclick="updateData(${element.key})">Update</button></div>
-        <div id="delete" class="d-block col-6"><button onclick="deleteData(${element.key})" class="btn  w-100 btn-danger" >Delete</button></div> </div></td></tr>`
+        <div id="update${element.key}"  class="d-none col-6 justify-content-center"><button class="btn w-100  btn-success" onclick="updateData(${element.key})">Update</button></div>
+        <div id="edit${element.key}" class="d-block col-6 justify-content-center"><button class="btn w-100  btn-primary"  onclick="editData(${element.key})">Edit</button></div>
+        <div id="cancel${element.key}" class="d-none col-12 justify-content-center"><button class="btn w-100  btn-danger"  onclick="cancelEdit(${element.key})">Cancel</button></div>
+        
+        <div id="delete${element.key}" class="d-block col-6"><button onclick="deleteData(${element.key})" class="btn  w-100 btn-danger" >Delete</button></div> </div></td></tr>`
         tableBody.appendChild(x)
         sl++
     });
 }
 
 const deleteData = (key) => {
-    tableData.splice(tableData.findIndex(object => {
-        return object.key === key
-    }), 1)
-    console.log(tableData)
-    displayTable()
+    if (!statusMode.localeCompare("normal")) {
+        tableData.splice(tableData.findIndex(object => {
+            return object.key === key
+        }), 1)
+        console.log(tableData)
+        displayTable()
+    }
 }
 
 const inputChange = () => {
@@ -83,22 +86,7 @@ const sortByName = () => {
 
 }
 const sortByReg = () => {
-    // if (sortImg.getAttribute('src').localeCompare("down.png")) {
-    //     console.log(
-    //         "in"
-    //     );
-    //     sortImg.src="down.png"
-    //     console.log(
-    //         sortImg.src
-    //     );
-    //     tableData.reverse()
-    //     displayTable()
-    //     return
-    // }
-    // console.log(
-    //    "out"
-    // );
-    // document.getElementById('head_reg').src = "up.png";
+
     tableData = tableData.map(
         array => (
             {
@@ -242,15 +230,16 @@ const sortBtnPress = (btn) => {
 const editData = (key) => {
     if (!statusMode.localeCompare("normal")) {
         statusMode = "editing"
-        document.getElementById('edit').setAttribute('class', 'd-none col-6 justify-content-center')
-        document.getElementById('delete').setAttribute('class', 'd-none col-6 justify-content-center')
-        document.getElementById('cancel').setAttribute('class', 'd-block col-12 justify-content-center')
+        document.getElementById(`edit${key}`).setAttribute('class', 'd-none col-6 justify-content-center')
+        document.getElementById(`delete${key}`).setAttribute('class', 'd-none col-6 justify-content-center')
+        document.getElementById(`cancel${key}`).setAttribute('class', 'd-block col-12 justify-content-center')
         let row = document.getElementById(`row${key}`)
         for (i = 1; i < row.cells.length - 1; i++) {
             x = document.createElement('input')
             x.setAttribute('type', 'text')
+            x.setAttribute('id', `input${i}`)
             x.setAttribute('class', 'w-100')
-            x.setAttribute('oninput', 'onInputChange()')
+            x.setAttribute('oninput', `onInputChange(${key})`)
             x.setAttribute('value', row.cells[i].innerHTML)
             row.cells[i].innerHTML = ""
             row.cells[i].appendChild(x)
@@ -258,47 +247,47 @@ const editData = (key) => {
     }
 }
 
-// const disableBtn=(key)=>{
-//     let len= document.getElementById('tableBody').row.length
-//     for(i=0;i<len;i++){
-//         if(document.getElementById('tableBody').row[i].getAttribute('id')
-//     }
-
-// }
-// const enableBtn=()=>{
-//     if(!statusMode.localeCompare("editing")){
-//         statusMode="normal"
-//         document.getElementById('edit').setAttribute('class','d-none col-6 justify-content-center')
-//         document.getElementById('delete').setAttribute('class','d-none col-6 justify-content-center')
-//         document.getElementById('cancel').setAttribute('class','d-block col-12 justify-content-center')
-//         let row = document.getElementById(`row${key}`)
-//         for (i = 1; i < row.cells.length - 1; i++) {
-//             x = document.createElement('td')
-//             x.setAttribute('type', 'text')
-//             x.setAttribute('class', 'w-100')
-//             x.setAttribute('oninput', 'inputChange()')
-//             x.setAttribute('value', row.cells[i].innerHTML)
-//             row.cells[i].innerHTML = ""
-//             row.cells[i].appendChild(x)
-//         }
-// }
-
-
-const onInputChange = () => {
+const onInputChange = (key) => {
     if (!statusMode.localeCompare("editing")) {
-        statusMode = "normal"
-        document.getElementById('update').setAttribute('class', 'd-block col-6 justify-content-center')
-        document.getElementById('cancel').setAttribute('class', 'd-block col-6 justify-content-center')
-        // let row = document.getElementById(`row${key}`)
-        // for (i = 1; i < row.cells.length - 1; i++) {
-        //     x = document.createElement('td')
-        //     x.setAttribute('type', 'text')
-        //     x.setAttribute('class', 'w-100')
-        //     x.setAttribute('oninput', 'inputChange()')
-        //     x.setAttribute('value', row.cells[i].innerHTML)
-        //     row.cells[i].innerHTML = ""
-        //     row.cells[i].appendChild(x)
-        // }
-
+        statusMode = "updating"
+        document.getElementById(`update${key}`).setAttribute('class', 'd-block col-6 justify-content-center')
+        document.getElementById(`cancel${key}`).setAttribute('class', 'd-block col-6 justify-content-center')
     }
 }
+
+
+const cancelEdit = (key) => {
+    statusMode = "normal"
+    dataIndex = tableData.findIndex(object => {
+        return object.key === key
+    })
+    slno = document.getElementById(`row${key}`).cells[0].innerHTML
+    let row = document.getElementById(`row${key}`)
+    row.innerHTML = `<tr><td>${slno}</td><td>${tableData[dataIndex].name}</td><td>${tableData[dataIndex].reg}</td><td>${tableData[dataIndex].grade}</td><td colspan="2"><div class="row g-2 ">
+    <div id="update${key}"  class="d-none col-6 justify-content-center"><button class="btn w-100  btn-success" onclick="updateData(${tableData[dataIndex].key})">Update</button></div>
+    <div id="edit${key}" class="d-block col-6 justify-content-center"><button class="btn w-100  btn-primary"  onclick="editData(${tableData[dataIndex].key})">Edit</button></div>
+    <div id="cancel${key}" class="d-none col-12 justify-content-center"><button class="btn w-100  btn-danger"  onclick="cancelEdit(${tableData[dataIndex].key})">Cancel</button></div>
+    
+    <div id="delete${key}" class="d-block col-6"><button onclick="deleteData(${tableData[dataIndex].key})" class="btn  w-100 btn-danger" >Delete</button></div> </div></td></tr>`
+
+}
+const updateData = (key) => {
+    statusMode = "normal"
+    let row = document.getElementById(`row${key}`)
+
+    for (i = 1; i < row.cells.length - 1; i++) {
+        inputvalue = document.getElementById(`input${i}`).value
+        row.cells[i].innerHTML = inputvalue
+    }
+    document.getElementById(`update${key}`).setAttribute('class', 'd-none col-6 justify-content-center')
+    document.getElementById(`cancel${key}`).setAttribute('class', 'd-none col-6 justify-content-center')
+    document.getElementById(`edit${key}`).setAttribute('class', 'd-block col-6 justify-content-center')
+    document.getElementById(`delete${key}`).setAttribute('class', 'd-block col-6 justify-content-center')
+
+
+
+}
+
+
+
+
