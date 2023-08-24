@@ -34,14 +34,14 @@
 
                 <div class="col-12">
                     <label for="regNo" class="form-label">Registration Number <span class="text-danger" >*</span> </label>
-                    <input type="text" autocomplete="off" class="form-control" id="reg" onkeypress="disableWarning_regNo()">
+                    <input type="text" autocomplete="off" class="form-control" id="reg" onkeypress="disableWarning_regNo();return event.charCode >= 48 && event.charCode <= 57'">
                 </div>
                 <div class="mb-3 ">
                     <span class="text-danger" id="regNoWarning"></span>
                 </div>
                 <div class="col-12">
                     <label for="grade" class="form-label">Grade <span class="text-danger" >*</span> </label>
-                    <input type="text" autocomplete="off" class="form-control" id="grade" onkeypress="disableWarning_grade()">
+                    <input type="text" autocomplete="off" class="form-control" id="grade" onkeypress="disableWarning_grade();return event.charCode >= 48 && event.charCode <= 57'">
                 </div>
                 <div class="mb-3 ">
                     <span class="text-danger" id="gradeWarning"></span>
@@ -60,13 +60,13 @@
                 <thead >
                     <tr>
                         <th>SL_No</th>
-                        <th>Name <img class="bg-success rounded " id="head_name" onclick="sortByName()" src="up.png" alt=""></th>
-                        <th>Reg  <img class="bg-success rounded " onclick="sortByReg()" id="head_reg"  src="up.png" alt=""></th>
-                        <th>Grade <img class="bg-success rounded " onclick="sortByGrade()" id="head_grade"  src="up.png" alt=""></th>
+                        <th>Name <img class="bg-success rounded " id="head_name" onclick="sortBtnPress('head_name')" src="up.png" alt=""></th>
+                        <th>Reg  <img class="bg-success rounded " onclick="sortBtnPress('head_reg')" id="head_reg"  src="up.png" alt=""></th>
+                        <th>Grade <img class="bg-success rounded " onclick="sortBtnPress('head_grade')" id="head_grade"  src="up.png" alt=""></th>
                         <th colspan="2"></th>
                     </tr>
                 </thead>
-                <tbody id="tableBody" >
+                <tbody id="tableBody" ><tr></tr> <tr></tr>
                 </tbody>
             </table>
 

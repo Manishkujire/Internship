@@ -1,5 +1,6 @@
 console.log("hi")
-
+let state = "head_name"
+let preState="head_name"
 
 const comment = document.getElementById('comment')
 const username = document.getElementById('username')
@@ -26,7 +27,7 @@ const submitAction = () => {
         }
         tableData.push(data)
         clearForm()
-        sortByReg()
+        mainSort(state)
         displayTable()
     }
 }
@@ -34,10 +35,9 @@ const displayTable = () => {
     tableBody.innerHTML = ""
     let sl = 1
     tableData.forEach(element => {
-        console.log(element)
         x = document.createElement('TR')
-        x.setAttribute('id',`row${element.key}`)
-        x.innerHTML = `<tr><td>${sl}</td><td>${element.name}</td><td>${element.reg}</td><td>${element.grade}</td><td colspan="2"><div class="row g-2 "><div class="col-6 justify-content-center"><button class="btn w-100 btn-success" id="edit" onclick="editData(${element.key})">Edit</button></div><div class="col-6"><button onclick="deleteData(${element.key})" class="btn w-100 btn-danger" id="edit">Delete</button></div> </div></td></tr>`
+        x.setAttribute('id', `row${element.key}`)
+        x.innerHTML = `<tr><td>${sl}</td><td>${element.name}</td><td>${element.reg}</td><td>${element.grade}</td><td colspan="2"><div class="row g-2 "><div class="col-6 justify-content-center"><button class="btn w-100 d-block btn-success" id="edit" onclick="editData(${element.key})">Edit</button></div><div class="col-6"><button onclick="deleteData(${element.key})" class="btn d-block w-100 btn-danger" id="edit">Delete</button></div> </div></td></tr>`
         tableBody.appendChild(x)
         i++
     });
@@ -46,33 +46,24 @@ const displayTable = () => {
 const deleteData = (key) => {
     tableData.splice(tableData.findIndex(object => {
         return object.key === key
-    }),1)
+    }), 1)
     console.log(tableData)
     displayTable()
 }
 
-const inputChange=()=>{
+const inputChange = () => {
     alert("editing")
 }
 
 
-const editData=(key)=>{
-    let row=document.getElementById(`row${key}`)
-    for(i=1;i<row.cells.length-1;i++){
-        x = document.createElement('input')
-        x.setAttribute('type','text')
-        x.setAttribute('class','w-100')
-        x.setAttribute('oninput','inputChange()')
-        x.setAttribute('value',row.cells[i].innerHTML)
-        row.cells[i].innerHTML=""
-        row.cells[i].appendChild(x)
-    }
+const setState = (newState) => {
+    state = newState
 }
 
+
+
 const sortByName = () => {
-    console.log(
-        tableData
-    );
+
     tableData = tableData.map(
         array => (
             {
@@ -85,15 +76,24 @@ const sortByName = () => {
     ).sort((a, b) => a.name.localeCompare(b.name)
     )
 
-    console.log(
-        tableData
-    );
-
 }
 const sortByReg = () => {
-    console.log(
-        tableData
-    );
+    // if (sortImg.getAttribute('src').localeCompare("down.png")) {
+    //     console.log(
+    //         "in"
+    //     );
+    //     sortImg.src="down.png"
+    //     console.log(
+    //         sortImg.src
+    //     );
+    //     tableData.reverse()
+    //     displayTable()
+    //     return
+    // }
+    // console.log(
+    //    "out"
+    // );
+    // document.getElementById('head_reg').src = "up.png";
     tableData = tableData.map(
         array => (
             {
@@ -105,10 +105,21 @@ const sortByReg = () => {
         )
     ).sort((a, b) => a.reg - b.reg
     )
+}
 
-    console.log(
-        tableData
-    );
+
+const sortByGrade = () => {
+    tableData = tableData.map(
+        array => (
+            {
+                key: array.key,
+                name: array.name,
+                reg: array.reg,
+                grade: array.grade
+            }
+        )
+    ).sort((a, b) => a.grade - b.grade
+    )
 }
 
 const validate = () => {
@@ -147,5 +158,102 @@ const disableWarning_grade = () => {
 
 const clearForm = () => {
     document.getElementById('myForm').reset()
+
+}
+
+
+const reverseSort = () => {
+    tableData.reverse()
+}
+
+const mainSort=(state)=>{
+    if (!state.localeCompare('head_name')) {
+        sortByName()
+        console.log("in name")
+
+
+    }
+    else if (!state.localeCompare("head_grade")) {
+        sortByGrade()
+        console.log("in grade")
+    }
+    else if (!state.localeCompare("head_reg")) {
+        console.log("in reg")
+
+        sortByReg()
+    }
+}
+const toggleSortImg = (obj) => {
+    s = document.getElementById(obj).getAttribute('src')
+    document.getElementById(obj).src = s.localeCompare("down.png") ? "down.png" : "up.png"
+    return state
+}
+
+const resetStateImg=()=>{
+    document.getElementById('head_grade').src="up.png"
+    document.getElementById('head_name').src="up.png"
+    document.getElementById('head_reg').src="up.png"
+}
+
+const sortBtnPress = (btn) => {
+    if(!state.localeCompare(btn)){
+        toggleSortImg(btn)
+        reverseSort()
+        console.log(state)
+        console.log("in")
+        displayTable()
+        return
+    }
+    //preState=state
+    resetStateImg()
+    toggleSortImg(btn)
+    state = btn
+    mainSort(state)
+    console.log("out")
+    console.log(state)
+    displayTable()
+
+}
+// const sortBtnPress = (btn) => {
+//     if(!preState.localeCompare(btn)){
+//         toggleSortImg(btn)
+//         reverseSort()
+//         console.log(state)
+//         console.log("in")
+//         displayTable()
+//         return
+//     }
+//     preState=state
+//     resetStateImg()
+//     toggleSortImg(btn)
+//     state = btn
+//     mainSort(state)
+//     console.log("out")
+//     console.log(state)
+//     displayTable()
+
+// }
+
+const editData = (key) => {
+    let row = document.getElementById(`row${key}`)
+    for (i = 1; i < row.cells.length - 1; i++) {
+        x = document.createElement('input')
+        x.setAttribute('type', 'text')
+        x.setAttribute('class', 'w-100')
+        x.setAttribute('oninput', 'inputChange()')
+        x.setAttribute('value', row.cells[i].innerHTML)
+        row.cells[i].innerHTML = ""
+        row.cells[i].appendChild(x)
+    }
+}
+
+// const disableBtn=(key)=>{
+//     let len= document.getElementById('tableBody').row.length
+//     for(i=0;i<len;i++){
+//         if(document.getElementById('tableBody').row[i].getAttribute('id')
+//     }
+    
+// }
+const enableBtn=()=>{
 
 }
