@@ -10,13 +10,17 @@ const submit = document.getElementById('submit')
 const reset_btn = document.getElementById('reset_btn')
 const tableBody = document.getElementById('tableBody')
 const clearTableBtn = document.getElementById('clearTable')
+const userNameWarning = document.getElementById('userNameWarning')
+const regNoWarning = document.getElementById('regNoWarning')
+const gradeWarning = document.getElementById('gradeWarning')
+
 let tableData = []
 let savedData = []
 let i = 0
 
 // action on submit btn click
 const submitAction = () => {
-    if (validate()) {
+    if (validate(username, reg, grade, userNameWarning, regNoWarning, gradeWarning)) {
         let data = {
             keyValue: i,
             name: username.value,
@@ -124,39 +128,30 @@ const sortByGrade = () => {
 }
 
 // validate the input fields
-const validate = () => {
-    if (username.value === "" || grade.value === "" || reg.value === "") {
-        if (grade.value === "") {
-            document.getElementById('gradeWarning').innerText = "The Grade field cannot be blank"
-            document.getElementById('grade').focus()
+const validate = (field1, field2, field3, label1, label2, label3) => {
+    if (field1.value === "" || field2.value === "" || field3.value === "") {
+        if (field3.value === "") {
+            label3.style.display = "block"
+            field3.focus()
         }
-        if (reg.value === "") {
-            document.getElementById('regNoWarning').innerText = "The Reg field cannot be blank"
-            document.getElementById('reg').focus()
+        if (field2.value === "") {
+            label2.style.display = "block"
+            field2.focus()
         }
-        if (username.value === "") {
-            document.getElementById('userNameWarning').innerText = "The Name field cannot be blank"
-            document.getElementById('username').focus()
+        if (field1.value === "") {
+            label1.style.display = "block"
+            field1.focus()
         }
         return false
     }
     else return true
 }
 
-//  disable username warning
-const disableWarning_userName = () => {
-    userNameWarning.innerHTML = "";
+//  disable warning
+const disableWarning = (field) => {
+    field.style.display = "none"
 }
 
-//  disable reg_no warning
-const disableWarning_regNo = () => {
-    regNoWarning.innerHTML = "";
-}
-
-//  disable grade warning
-const disableWarning_grade = () => {
-    gradeWarning.innerHTML = "";
-}
 
 // clear the form
 const clearForm = () => {
@@ -215,6 +210,7 @@ const sortBtnPress = (btn) => {
 // action on edit btn press
 const editData = (keyValue) => {
     if (!statusMode.localeCompare("normal")) {
+        clearForm()
         statusMode = "editing"
         document.getElementById(`edit${keyValue}`).setAttribute('class', 'd-none col-md-6')
         document.getElementById(`delete${keyValue}`).setAttribute('class', 'd-none col-md-6')
@@ -224,11 +220,23 @@ const editData = (keyValue) => {
             savedData[i] = row.cells[i].innerHTML
             x = document.createElement('input')
             x.setAttribute('type', 'text')
+            x.setAttribute('id', `inputField_${i}_${keyValue}`)
             x.setAttribute('class', 'w-100')
-            x.setAttribute('oninput', `onInputChange(${keyValue})`)
+            if (i == 1)
+                x.setAttribute('onkeypress', 'return event.charCode >= 65 && event.charCode <= 122')
+            else
+                x.setAttribute('onkeypress', 'return event.charCode >= 48 && event.charCode <= 57')
+
+            x.setAttribute('oninput', `onInputChange(${keyValue});disableWarning(document.getElementById('errorLable_${i}_${keyValue}'));`)
             x.setAttribute('value', row.cells[i].innerHTML)
             row.cells[i].innerHTML = ""
+            y = document.createElement('label')
+            y.setAttribute('id', `errorLable_${i}_${keyValue}`)
+            y.setAttribute('class', 'pt-1 text-danger')
+            y.setAttribute('style', 'display:none;')
+            y.innerHTML = "Invalid input"
             row.cells[i].appendChild(x)
+            row.cells[i].appendChild(y)
         }
     }
 }
@@ -262,25 +270,34 @@ const cancelEdit = (keyValue) => {
 
 // update the changed values to the table
 const updateData = (keyValue) => {
-    statusMode = "normal"
-    dataIndex = tableData.findIndex(object => {
-        return object.keyValue === keyValue
-    })
-    let row = document.getElementById(`row${keyValue}`)
+    let inputA = document.getElementById(`inputField_1_${keyValue}`)
+    let inputB = document.getElementById(`inputField_2_${keyValue}`)
+    let inputC = document.getElementById(`inputField_3_${keyValue}`)
+    let labelA = document.getElementById(`errorLable_1_${keyValue}`)
+    let labelB = document.getElementById(`errorLable_2_${keyValue}`)
+    let labelC = document.getElementById(`errorLable_3_${keyValue}`)
+    console.log(validate(inputA, inputB, inputC, labelA, labelB, labelC))
+    if (validate(inputA, inputB, inputC, labelA, labelB, labelC)) {
+        statusMode = "normal"
+        dataIndex = tableData.findIndex(object => {
+            return object.keyValue === keyValue
+        })
+        let row = document.getElementById(`row${keyValue}`)
 
-    for (i = 1; i < row.cells.length - 1; i++) {
-        inputvalue = document.getElementById(`row${keyValue}`).cells[i].childNodes[0].value
-        tableData[dataIndex][Object.keys(tableData[dataIndex])[i]] = inputvalue;
-        row.cells[i].innerHTML = inputvalue
+        for (i = 1; i < row.cells.length - 1; i++) {
+            inputvalue = document.getElementById(`row${keyValue}`).cells[i].childNodes[0].value
+            tableData[dataIndex][Object.keys(tableData[dataIndex])[i]] = inputvalue;
+            row.cells[i].innerHTML = inputvalue
+        }
+        clearSearchData()
+        mainSort(state)
+        displayTable(tableData)
     }
-    clearSearch()
-    mainSort(state)
-    displayTable(tableData)
 }
 
 // action on search
 const searchData = () => {
-    searchValue = document.getElementById('search').value.toString().trim()
+    searchValue = document.getElementById('searchinput').value.toString().trim()
     if (!searchValue.localeCompare(""))
         displayTable(tableData)
     else {
@@ -311,7 +328,7 @@ const clearTableData = () => {
     displayTable(tableData)
     if (confirm("Do you want to clear the table")) {
         clearForm()
-        clearSearch()
+        clearSearchData()
         tableData = []
         displayTable(tableData)
         clearTableBtn.style.display = "none"
@@ -319,6 +336,7 @@ const clearTableData = () => {
 }
 
 // clear the search text
-const clearSearch = () => {
-    document.getElementById('search').value = ""
+const clearSearchData = () => {
+    document.getElementById('searchinput').value = ""
+    displayTable(tableData)
 }

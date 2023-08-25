@@ -17,7 +17,7 @@
     </style>
 </head>
 
-<body class="mt-5" onLoad="">
+<body class="mt-5">
 
 
     <div class="container  bg-light">
@@ -25,12 +25,12 @@
             <h1 class="text-center">Student Details Form</h1>
             <form class="w-100 " id="myForm" onsubmit="">
                 <div class="col-12 ">
-                    <label for="userName" class="form-label" >Name <span class="text-danger">*</span> </label>
+                    <label for="userName" class="form-label">Name <span class="text-danger">*</span> </label>
                     <input type="text" autocomplete="off" class="form-control" id="username"
-                        onkeypress="disableWarning_userName();return event.charCode >= 65 && event.charCode <= 122">
+                        onkeypress="disableWarning(userNameWarning);return event.charCode >= 65 && event.charCode <= 122">
                 </div>
                 <div class="mb-3 ">
-                    <span class="text-danger" id="userNameWarning"></span>
+                    <span class="text-danger" id="userNameWarning" style="display: none;">The Name field cannot be blank</span>
 
                 </div>
 
@@ -38,18 +38,18 @@
                     <label for="regNo" class="form-label">Registration Number <span class="text-danger">*</span>
                     </label>
                     <input type="text" autocomplete="off" class="form-control" id="reg"
-                        onkeypress="disableWarning_regNo();return event.charCode >= 48 && event.charCode <= 57">
+                        onkeypress="disableWarning(regNoWarning);return event.charCode >= 48 && event.charCode <= 57">
                 </div>
                 <div class="mb-3 ">
-                    <span class="text-danger" id="regNoWarning"></span>
+                    <span class="text-danger" id="regNoWarning" style="display: none;">The Reg field cannot be blank</span>
                 </div>
                 <div class="col-12">
                     <label for="grade" class="form-label">Grade <span class="text-danger">*</span> </label>
                     <input type="text" autocomplete="off" class="form-control" id="grade"
-                        onkeypress="disableWarning_grade();return event.charCode >= 48 && event.charCode <= 57">
+                        onkeypress="disableWarning(gradeWarning);return event.charCode >= 48 && event.charCode <= 57">
                 </div>
                 <div class="mb-3 ">
-                    <span class="text-danger" id="gradeWarning"></span>
+                    <span class="text-danger" id="gradeWarning" style="display: none;">The Grade field cannot be blank</span>
                 </div>
                 <div class="buttons">
                     <button type="button" class="btn btn-success" id="submit" onclick="submitAction()">Submit</button>
@@ -60,25 +60,32 @@
         </div>
 
         <div id="table " class="">
-           <div class="row my-3 "><div class="col-2 mx-2"><h1>Table</h1></div><div class="col-6  "><input placeholder="Type to search" type="text" class="form-control" id="search" oninput="searchData()"></div><div class="col "><button class="btn w-100  btn-info ">Clear</button></div></div> 
+            <div class="row my-3 ">
+                <div class="col-2 mx-2">
+                    <h1>Table</h1>
+                </div>
+                <div class="col-6  "><input placeholder="Type to search" type="text" class="form-control" id="searchinput"
+                        oninput="searchData()"></div>
+                <div class="col "><button onclick="clearSearchData()" class="btn w-100  btn-info ">Clear</button></div>
+            </div>
             <table class="table justify-content-center">
-                <thead >
+                <thead>
                     <tr>
-                        <th >SL_No</th>
-                        <th>Name <img class=" rounded " id="head_name" onclick="sortBtnPress('head_name')"
-                                src="up.png" alt=""></th>
-                        <th>Reg <img class=" rounded " onclick="sortBtnPress('head_reg')" id="head_reg"
-                                src="up.png" alt=""></th>
+                        <th>SL_No</th>
+                        <th>Name <img class=" rounded " id="head_name" onclick="sortBtnPress('head_name')" src="up.png"
+                                alt=""></th>
+                        <th>Reg <img class=" rounded " onclick="sortBtnPress('head_reg')" id="head_reg" src="up.png"
+                                alt=""></th>
                         <th>Grade <img class=" rounded " onclick="sortBtnPress('head_grade')" id="head_grade"
                                 src="up.png" alt=""></th>
                         <th colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    
+
                 </tbody>
             </table>
-            <div  ><button id="clearTable" class="btn
+            <div><button id="clearTable" class="btn
                  btn-danger w-100" style="display: none;" onclick="clearTableData()">Clear Table</button></div>
 
         </div>
