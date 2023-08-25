@@ -1,6 +1,5 @@
 console.log("Start")
 let state = "head_name"
-let preState = "head_name"
 let statusMode = "normal"
 const comment = document.getElementById('comment')
 const username = document.getElementById('username')
@@ -17,7 +16,6 @@ const gradeWarning = document.getElementById('gradeWarning')
 let tableData = []
 let savedData = []
 let i = 0
-
 // action on submit btn click
 const submitAction = () => {
     if (validate(username, reg, grade, userNameWarning, regNoWarning, gradeWarning)) {
