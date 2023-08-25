@@ -191,6 +191,7 @@ const resetStateImg = () => {
 
 // action on sort btn press
 const sortBtnPress = (btn) => {
+    statusMode="normal"
     if (!state.localeCompare(btn)) {
         toggleSortImg(btn)
         reverseSort()
@@ -241,6 +242,7 @@ const editData = (keyValue) => {
 
 // action on change in input field while editing
 const onInputChange = (keyValue) => {
+
     if (!statusMode.localeCompare("editing")) {
         statusMode = "updating"
         document.getElementById(`update${keyValue}`).setAttribute('class', 'd-block col-md-6 ')
