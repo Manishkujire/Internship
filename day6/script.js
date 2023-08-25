@@ -9,6 +9,7 @@ const grade = document.getElementById('grade')
 const submit = document.getElementById('submit')
 const reset_btn = document.getElementById('reset_btn')
 const tableBody = document.getElementById('tableBody')
+const clearTableBtn = document.getElementById('clearTable')
 let tableData = []
 let savedData = []
 let i = 0
@@ -27,6 +28,9 @@ const submitAction = () => {
         clearForm()
         mainSort(state)
         displayTable(tableData)
+        if (tableData.length > 0) {
+            clearTableBtn.style.display = "block"
+        }
     }
 }
 
@@ -37,11 +41,27 @@ const displayTable = (obj) => {
     obj.forEach(element => {
         x = document.createElement('TR')
         x.setAttribute('id', `row${element.keyValue}`)
-        x.innerHTML = `<tr><td>${sl}</td><td>${element.name}</td><td>${element.reg}</td><td>${element.grade}</td><td colspan="2"><div class="row g-2 ">
-        <div id="update${element.keyValue}"  class="d-none col-6 justify-content-center"><button class="btn w-100  btn-success" onclick="updateData(${element.keyValue})">Update</button></div>
-        <div id="edit${element.keyValue}" class="d-block col-6 justify-content-center"><button class="btn w-100  btn-primary"  onclick="editData(${element.keyValue})">Edit</button></div>
-        <div id="cancel${element.keyValue}" class="d-none col-12 justify-content-center"><button class="btn w-100  btn-danger"  onclick="cancelEdit(${element.keyValue})">Cancel</button></div>
-        <div id="delete${element.keyValue}" class="d-block col-6"><button onclick="deleteData(${element.keyValue})" class="btn  w-100 btn-danger" >Delete</button></div> </div></td></tr>`
+        x.innerHTML = `<tr>
+        <td>${sl}</td>
+        <td>${element.name}</td>
+        <td>${element.reg}</td>
+        <td>${element.grade}</td>
+        <td colspan="2">
+            <div class="row g-2 ">
+                <div id="update${element.keyValue}" class="d-none col-md-6 ">
+                    <button class="btn w-100  btn-success"  onclick="updateData(${element.keyValue})">Update</button>
+                </div>
+                <div id="edit${element.keyValue}" class="d-block col-md-6 ">
+                    <button class="btn w-100  btn-primary"  onclick="editData(${element.keyValue})">Edit</button>
+                </div>
+                <div id="cancel${element.keyValue}" class="d-none col-12 ">
+                    <button class="btn w-100 btn-danger"  onclick="cancelEdit(${element.keyValue})">Cancel</button>
+                </div>
+                <div id="delete${element.keyValue}" class="d-block col-md-6">
+                    <button onclick="deleteData(${element.keyValue})" class="btn  w-100 btn-danger" >Delete</button>
+                </div>
+            </div>
+        </td></tr>`
         tableBody.appendChild(x)
         sl++
     });
@@ -54,6 +74,9 @@ const deleteData = (keyValue) => {
             return object.keyValue === keyValue
         }), 1)
         displayTable(tableData)
+    }
+    if (!tableData.length > 0) {
+        clearTableBtn.style.display = "none"
     }
 }
 
@@ -193,15 +216,14 @@ const sortBtnPress = (btn) => {
 const editData = (keyValue) => {
     if (!statusMode.localeCompare("normal")) {
         statusMode = "editing"
-        document.getElementById(`edit${keyValue}`).setAttribute('class', 'd-none col-6 justify-content-center')
-        document.getElementById(`delete${keyValue}`).setAttribute('class', 'd-none col-6 justify-content-center')
-        document.getElementById(`cancel${keyValue}`).setAttribute('class', 'd-block col-12 justify-content-center')
+        document.getElementById(`edit${keyValue}`).setAttribute('class', 'd-none col-md-6')
+        document.getElementById(`delete${keyValue}`).setAttribute('class', 'd-none col-md-6')
+        document.getElementById(`cancel${keyValue}`).setAttribute('class', 'd-block col-12')
         let row = document.getElementById(`row${keyValue}`)
         for (i = 1; i < row.cells.length - 1; i++) {
             savedData[i] = row.cells[i].innerHTML
             x = document.createElement('input')
             x.setAttribute('type', 'text')
-            x.setAttribute('id', `input${i}`)
             x.setAttribute('class', 'w-100')
             x.setAttribute('oninput', `onInputChange(${keyValue})`)
             x.setAttribute('value', row.cells[i].innerHTML)
@@ -215,8 +237,8 @@ const editData = (keyValue) => {
 const onInputChange = (keyValue) => {
     if (!statusMode.localeCompare("editing")) {
         statusMode = "updating"
-        document.getElementById(`update${keyValue}`).setAttribute('class', 'd-block col-6 justify-content-center')
-        document.getElementById(`cancel${keyValue}`).setAttribute('class', 'd-block col-6 justify-content-center')
+        document.getElementById(`update${keyValue}`).setAttribute('class', 'd-block col-md-6 ')
+        document.getElementById(`cancel${keyValue}`).setAttribute('class', 'd-block col-md-6 ')
     }
 }
 
@@ -230,10 +252,10 @@ const cancelEdit = (keyValue) => {
     for (i = 1; i < row.cells.length - 1; i++) {
         row.cells[i].innerHTML = savedData[i]
     }
-    document.getElementById(`update${keyValue}`).setAttribute('class', 'd-none col-6 justify-content-center')
-    document.getElementById(`cancel${keyValue}`).setAttribute('class', 'd-none col-6 justify-content-center')
-    document.getElementById(`edit${keyValue}`).setAttribute('class', 'd-block col-6 justify-content-center')
-    document.getElementById(`delete${keyValue}`).setAttribute('class', 'd-block col-6 justify-content-center')
+    document.getElementById(`update${keyValue}`).setAttribute('class', 'd-none col-md-6 ')
+    document.getElementById(`cancel${keyValue}`).setAttribute('class', 'd-none col-md-6 ')
+    document.getElementById(`edit${keyValue}`).setAttribute('class', 'd-block col-md-6 ')
+    document.getElementById(`delete${keyValue}`).setAttribute('class', 'd-block col-md-6 ')
 
 
 }
@@ -241,16 +263,19 @@ const cancelEdit = (keyValue) => {
 // update the changed values to the table
 const updateData = (keyValue) => {
     statusMode = "normal"
+    dataIndex = tableData.findIndex(object => {
+        return object.keyValue === keyValue
+    })
     let row = document.getElementById(`row${keyValue}`)
 
     for (i = 1; i < row.cells.length - 1; i++) {
-        inputvalue = document.getElementById(`input${i}`).value
+        inputvalue = document.getElementById(`row${keyValue}`).cells[i].childNodes[0].value
+        tableData[dataIndex][Object.keys(tableData[dataIndex])[i]] = inputvalue;
         row.cells[i].innerHTML = inputvalue
     }
-    ddocument.getElementById(`update${keyValue}`).setAttribute('class', 'd-none col-6 justify-content-center')
-    document.getElementById(`cancel${keyValue}`).setAttribute('class', 'd-none col-6 justify-content-center')
-    document.getElementById(`edit${keyValue}`).setAttribute('class', 'd-block col-6 justify-content-center')
-    document.getElementById(`delete${keyValue}`).setAttribute('class', 'd-block col-6 justify-content-center')
+    clearSearch()
+    mainSort(state)
+    displayTable(tableData)
 }
 
 // action on search
@@ -279,4 +304,21 @@ const filterBySearch = (arr, searchKey) => {
             return obj[keyValue].toString().includes(searchKey);
         })
     });
+}
+
+// clears the table values
+const clearTableData = () => {
+    displayTable(tableData)
+    if (confirm("Do you want to clear the table")) {
+        clearForm()
+        clearSearch()
+        tableData = []
+        displayTable(tableData)
+        clearTableBtn.style.display = "none"
+    }
+}
+
+// clear the search text
+const clearSearch = () => {
+    document.getElementById('search').value = ""
 }

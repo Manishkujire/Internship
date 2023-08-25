@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Table-Manupulation</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
     <style>
@@ -17,12 +17,12 @@
     </style>
 </head>
 
-<body onLoad="">
+<body class="mt-5" onLoad="">
 
 
-    <div class="container ml-3 bg-light">
+    <div class="container  bg-light">
         <div class="row">
-            <h1 class="mx-5">Student Details Form</h1>
+            <h1 class="text-center">Student Details Form</h1>
             <form class="w-100 " id="myForm" onsubmit="">
                 <div class="col-12 ">
                     <label for="userName" class="form-label" >Name <span class="text-danger">*</span> </label>
@@ -60,8 +60,8 @@
         </div>
 
         <div id="table " class="">
-           <div class="row my-3"><div class="col-2"><h1>Table</h1></div><div class="col-8 mx-4"><input placeholder="Type to search" type="text" class="form-control" id="search" oninput="searchData()"></div></div> 
-            <table class="table text-center align-content-center">
+           <div class="row my-3 "><div class="col-2 mx-2"><h1>Table</h1></div><div class="col-6  "><input placeholder="Type to search" type="text" class="form-control" id="search" oninput="searchData()"></div><div class="col "><button class="btn w-100  btn-info ">Clear</button></div></div> 
+            <table class="table justify-content-center">
                 <thead >
                     <tr>
                         <th >SL_No</th>
@@ -75,10 +75,11 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr></tr>
-                    <tr></tr>
+                    
                 </tbody>
             </table>
+            <div  ><button id="clearTable" class="btn
+                 btn-danger w-100" style="display: none;" onclick="clearTableData()">Clear Table</button></div>
 
         </div>
     </div>
